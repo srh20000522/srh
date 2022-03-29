@@ -8,7 +8,7 @@
         <el-form-item prop="name">
           <el-input placeholder="用户名" v-model="formdata.user"></el-input>
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item prop="pwd">
           <el-input placeholder="密码" v-model="formdata.pwd"></el-input>
         </el-form-item>
         <el-form-item>
@@ -60,6 +60,7 @@ export default {
       let pwd = this.formdata.pwd;
       let { data } = await instance.post("/login", { user, pwd });
 
+      if(data.message === 'fail') return this.$message.error('登录失败')
       if (data.message === "success") {
         localStorage.setItem("token", data.data.token);
         this.$message({
